@@ -34,8 +34,45 @@ angular.module('app')
     .then(callback)
   }
 
+  // Adds a recipe
+  this.postAddRecipe = function(callback){
+    $http.post(baseUrl + "/api/recipes")
+    .then(callback)
+  }
+
 }]);
 
+
+
+
+// // Adds a recipe
+// this.postAddRecipe = function(callback){
+//   $http.post(baseUrl + "/api/recipes")
+//   .then(callback)
+// }
+//
+// dataService.postAddRecipe(function(response){
+//   $scope.addRecipe = response.data;
+// });
+
+
+// // Updates the recipe for the specified ID
+// app.controller('updateRecipeController', function($scope, $http) {
+//     $http.put(baseUrl + "/api/recipes/{id}")
+//     .then(function(response) {
+//         $scope.updateRecipe = response.data;
+//     });
+// });
+//
+
+//
+// // Deletes the recipe for the specified ID
+// app.controller('deleteRecipeController', function($scope, $http) {
+//     $http.delete(baseUrl + "/api/recipes/{id}")
+//     .then(function(response) {
+//         $scope.deleteRecipe = response.data;
+//     });
+// });
 
 //   // Gets all recipes for a specified category BUT I DON'T NEED THIS?
 //   this.getAllRecipesInCategory = function(callback){
@@ -44,26 +81,3 @@ angular.module('app')
 //   }
 //
 //
-// // // Updates the recipe for the specified ID
-// // app.controller('updateRecipeController', function($scope, $http) {
-// //     $http.put(baseUrl + "/api/recipes/{id}")
-// //     .then(function(response) {
-// //         $scope.updateRecipe = response.data;
-// //     });
-// // });
-// //
-// // // Adds a recipe
-// // app.controller('addRecipeController', function($scope, $http) {
-// //     $http.post(baseUrl + "/api/recipes")
-// //     .then(function(response) {
-// //         $scope.addRecipe = response.data;
-// //     });
-// // });
-// //
-// // // Deletes the recipe for the specified ID
-// // app.controller('deleteRecipeController', function($scope, $http) {
-// //     $http.delete(baseUrl + "/api/recipes/{id}")
-// //     .then(function(response) {
-// //         $scope.deleteRecipe = response.data;
-// //     });
-// // });

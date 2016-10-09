@@ -34,13 +34,16 @@ angular.module('app')
      }
    }
 
-   $scope.loadView2 = function(clickedRecipe){
-     console.log(clickedRecipe);
-     $scope.id = clickedRecipe;
-     $location.path('/edit/'+ clickedRecipe);
+  //  $scope.loadView2 = function(clickedRecipe){
+  //    console.log(clickedRecipe);
+  //    $scope.id = clickedRecipe;
+  //    $location.path('/edit/'+ clickedRecipe);
+   //
+  //  }
 
+   $scope.loadAddRecipeView = function(){
+     $location.path('/add');
    }
-
 
 
 }]);

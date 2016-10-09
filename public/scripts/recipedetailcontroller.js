@@ -20,4 +20,8 @@ angular.module('app')
      $scope.foodItems = response.data;
    });
 
+   dataService.postAddRecipe(function(response){
+     $scope.addRecipe = response.data;
+   });
+
  }]);
