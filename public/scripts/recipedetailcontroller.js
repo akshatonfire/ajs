@@ -12,6 +12,12 @@ angular.module('app')
      $scope.recipeById = response.data;
    });
 
+   dataService.getAllCategories(function(response){
+     $scope.allCategories = response.data;
+   });
 
+   dataService.getFoodItems(function(response){
+     $scope.foodItems = response.data;
+   });
 
  }]);

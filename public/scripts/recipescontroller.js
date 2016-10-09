@@ -52,30 +52,3 @@ angular.module('app')
   //  dataService.getAllRecipesInCategory(function(response){
   //    $scope.allRecipesInCategory = response.data;
   //  });
-
-
-
-
-
- // .service('dataService', function($http){
- //
- //   var baseUrl = "http://localhost:5000";
- //
- //   // Gets all of the recipes
- //   this.getAllRecipes = function(callback){
- //     $http.get(baseUrl + "/api/recipes")
- //     .then(callback)
- //   }
- //
- //   // Gets all of the categories
- //   this.getAllCategories = function(callback){
- //     $http.get(baseUrl + "/api/categories")
- //     .then(callback)
- //   }
- //
- //  })
-
-
-
-
-// add ng-click = "helloWorld" to a button within the RecipesController scope

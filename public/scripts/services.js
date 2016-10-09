@@ -28,23 +28,20 @@ angular.module('app')
     .then(callback)
   }
 
+  // Gets all of the food items
+  this.getFoodItems = function(callback){
+    $http.get(baseUrl + "/api/fooditems")
+    .then(callback)
+  }
+
 }]);
+
 
 //   // Gets all recipes for a specified category BUT I DON'T NEED THIS?
 //   this.getAllRecipesInCategory = function(callback){
 //     $http.get(baseUrl + "/api/recipes?category={category}")
 //     .then(callback)
 //   }
-//
-//
-// // // Gets all of the food items
-// // app.controller('foodItemsController', function($scope, $http) {
-// //     $http.get(baseUrl + "/api/fooditems")
-// //     .then(function(response) {
-// //         $scope.foodItems = response.data;
-// //     });
-// // });
-//
 //
 //
 // // // Updates the recipe for the specified ID
