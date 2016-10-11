@@ -7,7 +7,7 @@ angular.module('app')
 
 
 
-   // Inject services
+   // Inject services needed when page loads
    dataService.getAllRecipes(function(response){
      $scope.allRecipes = response.data;
    });
@@ -41,9 +41,28 @@ angular.module('app')
    //
   //  }
 
+   // Load detail view when Add Recipe button is clicked
    $scope.loadAddRecipeView = function(){
      $location.path('/add');
    }
+
+   // Delete recipe when Delete button is clicked
+   $scope.deletedRecipe = function($index) {
+     $scope.deleteId = $scope.allRecipes[$index]._id;
+     (console.log($scope.allRecipes[$index]._id));
+
+     dataService.deleteRecipe($scope.deleteId, function(response){
+  //     $scope.deleteRecipe = response.data;
+       (console.log($scope.allRecipes[$index]._id));
+       (console.log(response));
+
+       // Then, must make call to recipes API again to get refreshed list?
+       dataService.getAllRecipes(function(response){
+         $scope.allRecipes = response.data;
+       });
+     });
+   }
+
 
 
 }]);

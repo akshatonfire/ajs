@@ -3,9 +3,18 @@
 
 angular.module('app')
 
- .controller('RecipeDetailController', ['$scope', 'dataService', '$routeParams', function($scope, dataService, $routeParams) {
+ .controller('RecipeDetailController', ['$scope', 'dataService', '$routeParams', '$location', function($scope, dataService, $routeParams, $location) {
 
-   $scope.id= $routeParams.id;
+   $scope.id = $routeParams.id;
+   console.log("$scope.id is " + $scope.id)
+   if ($scope.id == undefined){
+     $scope.addrecipe == true;
+   } else {
+     $scope.addrecipe == false;
+   }
+   //WHY does console keep saying $scope.addrecipe is undefined?
+   console.log("$scope.addrecipe is " + $scope.addrecipe)
+
 
    // Inject services
    dataService.getRecipeById($scope.id, function(response){
@@ -23,5 +32,10 @@ angular.module('app')
    dataService.postAddRecipe(function(response){
      $scope.addRecipe = response.data;
    });
+
+
+  //  if ($location.path('/add')){
+  //    $scope.addrecipe == true;
+  //  }
 
  }]);

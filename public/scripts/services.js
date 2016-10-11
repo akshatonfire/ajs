@@ -40,6 +40,13 @@ angular.module('app')
     .then(callback)
   }
 
+  // Deletes the recipe for the specified ID
+  this.deleteRecipe = function(id, callback){
+    $http.delete(baseUrl + "/api/recipes/" + id)
+    .then(callback)
+  }
+
+
 }]);
 
 
@@ -56,6 +63,12 @@ angular.module('app')
 // });
 
 
+
+
+
+
+
+
 // // Updates the recipe for the specified ID
 // app.controller('updateRecipeController', function($scope, $http) {
 //     $http.put(baseUrl + "/api/recipes/{id}")
@@ -66,13 +79,7 @@ angular.module('app')
 //
 
 //
-// // Deletes the recipe for the specified ID
-// app.controller('deleteRecipeController', function($scope, $http) {
-//     $http.delete(baseUrl + "/api/recipes/{id}")
-//     .then(function(response) {
-//         $scope.deleteRecipe = response.data;
-//     });
-// });
+
 
 //   // Gets all recipes for a specified category BUT I DON'T NEED THIS?
 //   this.getAllRecipesInCategory = function(callback){
