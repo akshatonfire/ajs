@@ -46,39 +46,14 @@ angular.module('app')
     .then(callback)
   }
 
+  // Updates existing recipe
+  this.putUpdateRecipe = function(id, recipedata, callback){
+    $http.put(baseUrl + "/api/recipes/" + id, recipedata)
+    .then(callback)
+  }
 
 }]);
 
-
-
-
-// // Adds a recipe
-// this.postAddRecipe = function(callback){
-//   $http.post(baseUrl + "/api/recipes")
-//   .then(callback)
-// }
-//
-// dataService.postAddRecipe(function(response){
-//   $scope.addRecipe = response.data;
-// });
-
-
-
-
-
-
-
-
-// // Updates the recipe for the specified ID
-// app.controller('updateRecipeController', function($scope, $http) {
-//     $http.put(baseUrl + "/api/recipes/{id}")
-//     .then(function(response) {
-//         $scope.updateRecipe = response.data;
-//     });
-// });
-//
-
-//
 
 
 //   // Gets all recipes for a specified category BUT I DON'T NEED THIS?

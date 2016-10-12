@@ -29,10 +29,32 @@ angular.module('app')
      $scope.foodItems = response.data;
    });
 
-   dataService.postAddRecipe(function(response){
-     $scope.addRecipe = response.data;
-   });
 
+
+  // Save recipe and return to home route
+  // BUT, I have to do a PUT if it's an update, and a POST if it's a new recipe
+  $scope.saveRecipe = function(){
+    console.log("Save Recipe button clicked.");
+    // if id exists
+    // Do I have to check whether it was edited?
+    // EITHER THIS IS NOT MAKING THE PUT REQUEST (AND THERE'S NO CONSOLE LOG) OR I NEED TO REFRESH RECIPES WHEN I GO BACK TO THE MAIN SCREEN. BUT I THINK IT IS ALREADY REFRESHING?
+    dataService.putUpdateRecipe($scope.id, $scope.recipeById, function(response){
+      console.log(response.data);
+    });
+
+
+    // else if id doesn't exist
+    // DON'T NEED ID AS PARAMETER?
+    // dataService.postAddRecipe(function(response){
+    //   $scope.addRecipe = response.data;
+    // });
+    $location.path('/');
+  }
+
+  // Cancel save and return to home route
+  $scope.cancelSave = function(){
+    $location.path('/');
+  }
 
   //  if ($location.path('/add')){
   //    $scope.addrecipe == true;
