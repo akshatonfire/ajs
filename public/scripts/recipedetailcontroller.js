@@ -29,31 +29,54 @@ angular.module('app')
      $scope.foodItems = response.data;
    });
 
+   // Cancel save and return to home route
+   $scope.cancelSave = function(){
+     $location.path('/');
+   }
 
 
-  // Save recipe and return to home route
-  // BUT, I have to do a PUT if it's an update, and a POST if it's a new recipe
+   // Delete ingredient
+   $scope.deleteIngredient = function(index) {
+     $scope.recipeById.ingredients.splice(index);
+   }
+
+   // Add ingredient
+   $scope.addIngredient = function(){
+     $scope.recipeById.ingredients.push(
+      {"foodItem": " ",
+       "condition": " ",
+       "amount": " "}
+      );
+   }
+
+   // Delete clicked-on step
+   $scope.deleteStep = function(index){
+     $scope.recipeById.steps.splice(index);
+   }
+
+   // Add new step
+   $scope.addStep = function(){
+     $scope.recipeById.steps.push({"description":"Add step description here."});
+   }
+
+  // This function will save the recipe and return to home route
+  // It will use put if it's an update, and post if it's a new recipe
   $scope.saveRecipe = function(){
     console.log("Save Recipe button clicked.");
-    // if id exists
-    // Do I have to check whether it was edited?
-    // EITHER THIS IS NOT MAKING THE PUT REQUEST (AND THERE'S NO CONSOLE LOG) OR I NEED TO REFRESH RECIPES WHEN I GO BACK TO THE MAIN SCREEN. BUT I THINK IT IS ALREADY REFRESHING?
-    dataService.putUpdateRecipe($scope.id, $scope.recipeById, function(response){
-      console.log(response.data);
-    });
+    // If recipe id exists, then we are updating an existing reciped
+    if ($scope.id.length > 0) {
+      dataService.putUpdateRecipe($scope.id, $scope.recipeById, function(response){
+        console.log(response.data);
+      });
+      // Then return to home route
+      $location.path('/');
+    } else if ($scope.id.length = 0) {
+    // what parameters do I need to send? just data?
+      dataService.postAddRecipe(function(response){
+        $scope.addRecipe = response.data;
+      });
 
-
-    // else if id doesn't exist
-    // DON'T NEED ID AS PARAMETER?
-    // dataService.postAddRecipe(function(response){
-    //   $scope.addRecipe = response.data;
-    // });
-    $location.path('/');
-  }
-
-  // Cancel save and return to home route
-  $scope.cancelSave = function(){
-    $location.path('/');
+    }
   }
 
   //  if ($location.path('/add')){
