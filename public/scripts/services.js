@@ -35,7 +35,7 @@ angular.module('app')
   }
 
   // Adds a recipe
-  this.postAddRecipe = function(callback){
+  this.postAddRecipe = function(recipedata, callback){
     $http.post(baseUrl + "/api/recipes")
     .then(callback)
   }
