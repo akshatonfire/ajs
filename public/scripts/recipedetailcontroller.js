@@ -12,8 +12,8 @@ angular.module('app')
    } else {
      $scope.addrecipe === true;
    }
-   //WHY does console keep saying $scope.addrecipe is undefined?
-   console.log("$scope.addrecipe is " + $scope.addrecipe)
+   //Why does console keep saying $scope.addrecipe is undefined?
+   console.log("$scope.addrecipe is " + $scope.addrecipe);
 
 
    // Inject services needed for Edit view
@@ -86,27 +86,24 @@ angular.module('app')
   $scope.saveRecipe = function(){
     console.log("Save Recipe button clicked.");
     // If recipe id exists, then we are updating an existing recipe
-    if ($scope.id.length > 0) {
+    if ($scope.id) {
       dataService.putUpdateRecipe($scope.id, $scope.recipeData, function(response){
         console.log(response.data);
       });
       // Then return to home route
       $location.path('/');
+    // If recipe id doesn't exist, then we are adding a new recipe
     } else {
-
-
-    // What parameters do I need to send? just data?
       dataService.postAddRecipe($scope.recipeData, function(response){
-        //$scope.addRecipe = response.data;
+        console.log(response.data)}, function(error){
+        console.log(error.data);
+          var errorMessages = [];
+        }
+      );
+      // Then return to home route
+      $location.path('/');
+    } // ends else
 
-        console.log(response.data);
-      });
+  } // ends saveRecipe
 
-    }
-  }
-
-  //  if ($location.path('/add')){
-  //    $scope.addrecipe == true;
-  //  }
-
- }]);
+}]); // ends controller
