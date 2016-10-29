@@ -1,118 +1,123 @@
+(function() {
 'use strict';
 
 
 angular.module('app')
 
- .controller('RecipeDetailController', ['$scope', 'dataService', '$routeParams', '$location', function($scope, dataService, $routeParams, $location) {
+  .controller('RecipeDetailController', ['$scope', 'dataService', '$routeParams', '$location', '$log', function($scope, dataService, $routeParams, $location, $log) {
 
-   $scope.id = $routeParams.id;
-   console.log("$scope.id is " + $scope.id)
-  //  if ($scope.id){
-  //    $scope.addrecipe == false;
-  //  } else {
-  //    $scope.addrecipe == true;
-  //  }
-  //  //Why does console keep saying $scope.addrecipe is undefined?
-  //  console.log("$scope.addrecipe is " + $scope.addrecipe);
+    // -------------------------------------------------------------
+    // Inject services needed for both Edit and Add New Recipe views
+    // -------------------------------------------------------------
+    dataService.getAllCategories(function(response){
+      $scope.allCategories = response.data;
+    });
+
+    dataService.getFoodItems(function(response){
+      $scope.foodItems = response.data;
+    });
+
+    // -------------------------------------------------------------------------
+    // Add functionality to buttons/links for both Edit and Add New Recipe views
+    // -------------------------------------------------------------------------
+
+    // Cancel save and return to home route
+    $scope.cancelSave = function(){
+      $location.path('/');
+    }
+
+    // Delete ingredient
+    $scope.deleteIngredient = function(index) {
+      $scope.recipeData.ingredients.splice(index);
+    }
+
+    // Add ingredient
+    $scope.addIngredient = function(){
+      $scope.recipeData.ingredients.push(
+        {"foodItem": " ",
+         "condition": " ",
+         "amount": " "}
+        );
+    }
+
+    // Delete clicked-on step
+    $scope.deleteStep = function(index){
+      $scope.recipeData.steps.splice(index);
+    }
+
+    // Add new step
+    $scope.addStep = function(){
+      $scope.recipeData.steps.push({"description":"Add step description here."});
+    }
 
 
-   // Inject services needed for Edit view
-   if ($scope.id) {
-     dataService.getRecipeById($scope.id, function(response){
-       $scope.recipeData = response.data;
-     });
-   }
-   else {
-     $scope.recipeData = {
-       name: "Enter recipe name",
-       description: "Enter recipe description",
+    // -------------------------------------------------------------------------
+    // Set $scope.recipeData depending on view
+    // -------------------------------------------------------------------------
 
-      //  category: "Other",
-       prepTime: 10,
-       cookTime: 10,
-       ingredients: [
-         {foodItem: " ",
-         condition: " ",
-         amount: " "}
-       ],
-       steps: [
-         {description: " "}
-       ]
-     }
-   }
+    // In Edit view, set id so clicked-on recipe will populate fields
+    $scope.id = $routeParams.id;
 
-   // Inject services needed for both Edit and Add New Recipe views
-   dataService.getAllCategories(function(response){
-     $scope.allCategories = response.data;
-   });
+    // Inject service needed for Edit view
+    // (if $scope.id exists, then we know it's the Edit view)
+    if ($scope.id) {
+      dataService.getRecipeById($scope.id, function(response){
+        $scope.recipeData = response.data;
+      });
+    }
+    // (if $scope.id doesn't exist, then we know it's the Add New Recipe view)
+    else {
+      // this will set placeholder fields for name and description
+      // it will also set prepTime/cookTime to deal with delete bug
+      $scope.recipeData = {
+        name: "Enter recipe name",
+        description: "Enter recipe description",
+        prepTime: 10,
+        cookTime: 10,
+        ingredients: [],
+        steps: []
+      }
+    }
 
-   dataService.getFoodItems(function(response){
-     $scope.foodItems = response.data;
-   });
 
-   // Add functionality to buttons/links for both Edit and Add Recipe views
-   // Cancel save and return to home route
-   $scope.cancelSave = function(){
-     $location.path('/');
-   }
+    // -------------------------------------------------------------------------
+    // Save recipe in Edit and Add New Recipe views
+    // -------------------------------------------------------------------------
 
-   // Delete ingredient
-   $scope.deleteIngredient = function(index) {
-     $scope.recipeData.ingredients.splice(index);
-   }
-
-   // Add ingredient
-   $scope.addIngredient = function(){
-     $scope.recipeData.ingredients.push(
-      {"foodItem": " ",
-       "condition": " ",
-       "amount": " "}
-      );
-   }
-
-   // Delete clicked-on step
-   $scope.deleteStep = function(index){
-     $scope.recipeData.steps.splice(index);
-   }
-
-   // Add new step
-   $scope.addStep = function(){
-     $scope.recipeData.steps.push({"description":"Add step description here."});
-   }
-
-  // This function will save the recipe and return to home route
-  // It will use put if it's an update, and post if it's a new recipe
-  $scope.saveRecipe = function(){
+    // This function will save the recipe and return to home route
+    // It will use put if it's an update, and post if it's a new recipe
+    $scope.saveRecipe = function(){
 
     // If recipe id exists, then we are updating an existing recipe
     if ($scope.id) {
       dataService.putUpdateRecipe($scope.id, $scope.recipeData, function(response){
-        console.log(response.data);
+        $log.log(response.data);
+        // Then return to home route
+        $location.path('/');
       });
-      // Then return to home route
-      $location.path('/');
     // If recipe id doesn't exist, then we are adding a new recipe
     } else {
-        dataService.postAddRecipe($scope.recipeData, function(response){
-          // console.log(response.data);
+      dataService.postAddRecipe($scope.recipeData, function(response){
+        if (response){
+          //$log.log(response.data);
           // Then return to home route
           $location.path('/');
-        }, function(error){
-          console.log(error.data.errors);
+        } else {
+          $log.error("There was an error.");
+        }
+      }, function(error) {
+        $log.warn(error.data.errors);
 
-          // $scope.errorMessages = error.data;
-          // console.log('$scope.errorMessages is ' + $scope.errorMessages);
-            // $scope.errorMessages = [];
-            // for (var i=0; i<error.data.errors.length; i++) {
-            //   $scope.errorMessages.push(error.data.errors[i].userMessage);
-            // }
-          // if errorMessages.length > 0, show div
-          });
-
-
-
+        $scope.postingErrors = error.data.errors;
+        $scope.categoryError = error.data.errors.category;
+        $scope.ingredientError = error.data.errors.ingredients;
+        $scope.stepsError = error.data.errors.steps;
+      }); // ends postAddRecipe
     } // ends else
 
   } // ends saveRecipe
 
 }]); // ends controller
+
+
+})();
