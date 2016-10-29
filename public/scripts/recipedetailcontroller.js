@@ -7,13 +7,13 @@ angular.module('app')
 
    $scope.id = $routeParams.id;
    console.log("$scope.id is " + $scope.id)
-   if ($scope.id){
-     $scope.addrecipe === false;
-   } else {
-     $scope.addrecipe === true;
-   }
-   //Why does console keep saying $scope.addrecipe is undefined?
-   console.log("$scope.addrecipe is " + $scope.addrecipe);
+  //  if ($scope.id){
+  //    $scope.addrecipe == false;
+  //  } else {
+  //    $scope.addrecipe == true;
+  //  }
+  //  //Why does console keep saying $scope.addrecipe is undefined?
+  //  console.log("$scope.addrecipe is " + $scope.addrecipe);
 
 
    // Inject services needed for Edit view
@@ -21,18 +21,17 @@ angular.module('app')
      dataService.getRecipeById($scope.id, function(response){
        $scope.recipeData = response.data;
      });
-   } else {
+   }
+   else {
      $scope.recipeData = {
        name: "Enter recipe name",
        description: "Enter recipe description",
-       // BUT THIS ISN'T LINKED TO CATEGORY FIELD
-       category: {
-         name: "Entree"
-       },
-       prepTime: 0,
-       cookTime: 0,
+
+      //  category: "Other",
+       prepTime: 10,
+       cookTime: 10,
        ingredients: [
-         {foodItem: "Select Item",
+         {foodItem: " ",
          condition: " ",
          amount: " "}
        ],
@@ -84,7 +83,7 @@ angular.module('app')
   // This function will save the recipe and return to home route
   // It will use put if it's an update, and post if it's a new recipe
   $scope.saveRecipe = function(){
-    console.log("Save Recipe button clicked.");
+
     // If recipe id exists, then we are updating an existing recipe
     if ($scope.id) {
       dataService.putUpdateRecipe($scope.id, $scope.recipeData, function(response){
@@ -94,14 +93,24 @@ angular.module('app')
       $location.path('/');
     // If recipe id doesn't exist, then we are adding a new recipe
     } else {
-      dataService.postAddRecipe($scope.recipeData, function(response){
-        console.log(response.data)}, function(error){
-        console.log(error.data);
-          var errorMessages = [];
-        }
-      );
-      // Then return to home route
-      $location.path('/');
+        dataService.postAddRecipe($scope.recipeData, function(response){
+          // console.log(response.data);
+          // Then return to home route
+          $location.path('/');
+        }, function(error){
+          console.log(error.data.errors);
+
+          // $scope.errorMessages = error.data;
+          // console.log('$scope.errorMessages is ' + $scope.errorMessages);
+            // $scope.errorMessages = [];
+            // for (var i=0; i<error.data.errors.length; i++) {
+            //   $scope.errorMessages.push(error.data.errors[i].userMessage);
+            // }
+          // if errorMessages.length > 0, show div
+          });
+
+
+
     } // ends else
 
   } // ends saveRecipe
