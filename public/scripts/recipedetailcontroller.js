@@ -72,6 +72,7 @@ angular.module('app')
       $scope.recipeData = {
         name: "Enter recipe name",
         description: "Enter recipe description",
+        category: "",
         prepTime: 10,
         cookTime: 10,
         ingredients: [],
@@ -99,7 +100,7 @@ angular.module('app')
     } else {
       dataService.postAddRecipe($scope.recipeData, function(response){
         if (response){
-          //$log.log(response.data);
+          $log.log(response.data);
           // Then return to home route
           $location.path('/');
         } else {
@@ -109,9 +110,9 @@ angular.module('app')
         $log.warn(error.data.errors);
 
         $scope.postingErrors = error.data.errors;
-        $scope.categoryError = error.data.errors.category;
-        $scope.ingredientError = error.data.errors.ingredients;
-        $scope.stepsError = error.data.errors.steps;
+        $scope.categoryError = error.data.errors.category[0];
+        $scope.ingredientError = error.data.errors.ingredients[0];
+        $scope.stepsError = error.data.errors.steps[0];
       }); // ends postAddRecipe
     } // ends else
 
