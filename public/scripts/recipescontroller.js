@@ -10,30 +10,34 @@ angular.module('app')
     // Inject services needed when page loads
     // -------------------------------------------------------------
     dataService.getAllRecipes(function(response){
-      $scope.allRecipes = response.data;
+      $scope.listRecipes = response.data;
     });
 
     dataService.getAllCategories(function(response){
       $scope.allCategories = response.data;
     });
 
+
     // -------------------------------------------------------------
     // Check for recipe matches when user changes select menu
     // -------------------------------------------------------------
-    $scope.checkforresults = function(selection) {
-      // Reset noresults when user changes select menu
-      $scope.noresults = false;
-      var counter = 0;
-      for (var i=0; i<$scope.allRecipes.length; i++) {
-        if ($scope.allRecipes[i].category == selection) {
-          counter++;
+    $scope.selectedCategory = null;
+
+    $scope.checkForResults = function() {
+      // Make call to API to get all recipes in selected category
+      dataService.getAllRecipesInCategory($scope.selectedCategory, function(response){
+        console.log(response.data);
+        $scope.listRecipes = response.data;
+        // Use noresults to show/hide 'No recipes found' message based on whether results come back
+        if ($scope.listRecipes.length) {
+          $scope.noresults = false;
+        } else {
+          $scope.noresults = true;
         }
-      }
-      // If there are no matches and select menu isn't set to All Categories,
-      if (counter==0 && (selection)) {
-        $scope.noresults = true;
-      }
+
+      });
     }
+
 
     // -------------------------------------------------------------
     // Load detail view when Add Recipe button is clicked

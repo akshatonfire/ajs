@@ -1,8 +1,10 @@
 <div class="grid-100 row controls">
   <div class="grid-30">
 
-    <select ng-model="selectedcategory" ng-options="category.name for category in allCategories" ng-change="checkforresults(selectedcategory.name)">
+  <!-- <select ng-model="selectedCategory" ng-options="category.name for category in allCategories" ng-change="checkforresults()"> -->
+    <select ng-model="selectedCategory" ng-change="checkForResults()">
       <option value="">All Categories</option>
+      <option value ="{{category.name}}" ng-repeat="category in allCategories">{{category.name}}</option>
     </select>
   </div>
   <div class="grid-70">
@@ -14,7 +16,6 @@
 <div class="clear"></div>
 
 
-<!--  ng-if="recipes.length == 0" -->
 <div class="grid-100 row" ng-show="noresults">
   <div class="grid-70">
     <p>No recipes found!</p>
@@ -23,9 +24,9 @@
 
 
 <div>
-<div class="grid-100 row addHover" ng-repeat="recipe in allRecipes | filter: {category: selectedcategory.name}">
+<div class="grid-100 row addHover" ng-repeat="recipe in listRecipes">
 
-  <a ng-href="/#/edit/{{recipe._id}}" ng-click="loadView2(recipe._id)">
+  <a ng-href="/#/edit/{{recipe._id}}">
     <div class="grid-70" ng-hide="noresults">
       <p>
         {{recipe.name}}

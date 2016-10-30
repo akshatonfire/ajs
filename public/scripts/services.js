@@ -22,6 +22,12 @@ angular.module('app')
     .then(callback)
   }
 
+  // Gets all recipes for a specified category
+  this.getAllRecipesInCategory = function(category, callback){
+    $http.get(baseUrl + "/api/recipes?category=" + category)
+    .then(callback)
+  }
+
   // Gets the recipe for the specified ID
   this.getRecipeById = function(id, callback){
     $http.get(baseUrl + "/api/recipes/" + id)
@@ -53,13 +59,3 @@ angular.module('app')
   }
 
 }]);
-
-
-
-//   // Gets all recipes for a specified category BUT I DON'T NEED THIS?
-//   this.getAllRecipesInCategory = function(callback){
-//     $http.get(baseUrl + "/api/recipes?category={category}")
-//     .then(callback)
-//   }
-//
-//
