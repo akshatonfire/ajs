@@ -6,9 +6,9 @@ angular.module('app')
 
   .controller('RecipeDetailController', ['$scope', 'dataService', '$routeParams', '$location', '$log', function($scope, dataService, $routeParams, $location, $log) {
 
-    // -------------------------------------------------------------
-    // Inject services needed for both Edit and Add New Recipe views
-    // -------------------------------------------------------------
+    // ----------------------------------------------------------------
+    // Inject services needed for Edit and Add New Recipe views
+    // ----------------------------------------------------------------
     dataService.getAllCategories(function(response){
       $scope.allCategories = response.data;
     });
@@ -16,6 +16,7 @@ angular.module('app')
     dataService.getFoodItems(function(response){
       $scope.foodItems = response.data;
     });
+
 
     // -------------------------------------------------------------------------
     // Add functionality to buttons/links for both Edit and Add New Recipe views
@@ -92,9 +93,20 @@ angular.module('app')
     // If recipe id exists, then we are updating an existing recipe
     if ($scope.id) {
       dataService.putUpdateRecipe($scope.id, $scope.recipeData, function(response){
-        $log.log(response.data);
-        // Then return to home route
-        $location.path('/');
+        if (response){
+          $log.log(response.data);
+          // Then return to home route
+          $location.path('/');
+        } else {
+          $log.error("There was an error.");
+        }
+      }, function(error) {
+        $log.warn(error.data.errors);
+
+        $scope.postingErrors = error.data.errors;
+        $scope.categoryError = error.data.errors.category[0];
+        $scope.ingredientError = error.data.errors.ingredients[0];
+        $scope.stepsError = error.data.errors.steps[0];
       });
     // If recipe id doesn't exist, then we are adding a new recipe
     } else {
