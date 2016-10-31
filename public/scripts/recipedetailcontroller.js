@@ -101,13 +101,13 @@ angular.module('app')
           $log.error("There was an error.");
         }
       }, function(error) {
-        $log.warn(error.data.errors);
+        $log.error(error.data.errors);
+        if (error) {$scope.showError = true}
 
-        $scope.postingErrors = error.data.errors;
-        $scope.categoryError = error.data.errors.category[0];
-        $scope.ingredientError = error.data.errors.ingredients[0];
-        $scope.stepsError = error.data.errors.steps[0];
-      });
+        $scope.categoryError = error.data.errors.category;
+        $scope.ingredientError = error.data.errors.ingredients;
+        $scope.stepsError = error.data.errors.steps;
+      }); // ends putUpdateRecipe
     // If recipe id doesn't exist, then we are adding a new recipe
     } else {
       dataService.postAddRecipe($scope.recipeData, function(response){
@@ -119,12 +119,12 @@ angular.module('app')
           $log.error("There was an error.");
         }
       }, function(error) {
-        $log.warn(error.data.errors);
+        $log.error(error.data.errors);
+        if (error) {$scope.showError = true}
 
-        $scope.postingErrors = error.data.errors;
-        $scope.categoryError = error.data.errors.category[0];
-        $scope.ingredientError = error.data.errors.ingredients[0];
-        $scope.stepsError = error.data.errors.steps[0];
+        $scope.categoryError = error.data.errors.category;
+        $scope.ingredientError = error.data.errors.ingredients;
+        $scope.stepsError = error.data.errors.steps;
       }); // ends postAddRecipe
     } // ends else
 

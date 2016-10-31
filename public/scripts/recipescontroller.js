@@ -26,7 +26,6 @@ angular.module('app')
     $scope.checkForResults = function() {
       // Make call to API to get all recipes in selected category
       dataService.getAllRecipesInCategory($scope.selectedCategory, function(response){
-        console.log(response.data);
         $scope.listRecipes = response.data;
         // Use noresults to show/hide 'No recipes found' message based on whether results come back
         if ($scope.listRecipes.length) {
@@ -51,12 +50,12 @@ angular.module('app')
     // -------------------------------------------------------------
     $scope.deletedRecipe = function($index) {
       // Set deleteId of recipe that was clicked on
-      $scope.deleteId = $scope.allRecipes[$index]._id;
+      $scope.deleteId = $scope.listRecipes[$index]._id;
       // Make call to API to delete the recipe
       dataService.deleteRecipe($scope.deleteId, function(response){
         // Then, must make call to recipes API again to get refreshed list
         dataService.getAllRecipes(function(response){
-          $scope.allRecipes = response.data;
+          $scope.listRecipes = response.data;
         });
       });
     }

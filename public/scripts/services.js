@@ -41,21 +41,21 @@ angular.module('app')
   }
 
   // Adds a recipe
-  this.postAddRecipe = function(recipedata, callback){
+  this.postAddRecipe = function(recipedata, callback, error){
     $http.post(baseUrl + "/api/recipes", recipedata)
-    .then(callback)
+    .then(callback, error)
   }
 
   // Deletes the recipe for the specified ID
-  this.deleteRecipe = function(id, callback){
+  this.deleteRecipe = function(id, callback, error){
     $http.delete(baseUrl + "/api/recipes/" + id)
-    .then(callback)
+    .then(callback, error)
   }
 
   // Updates existing recipe
-  this.putUpdateRecipe = function(id, recipedata, callback){
+  this.putUpdateRecipe = function(id, recipedata, callback, error){
     $http.put(baseUrl + "/api/recipes/" + id, recipedata)
-    .then(callback)
+    .then(callback, error)
   }
 
 }]);

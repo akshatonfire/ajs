@@ -7,7 +7,7 @@
       return function myExceptionHandler(exception, cause) {
         exception.message;
         alert(exception.message);
-        // $log.error(exception, cause);
+        $log.error(exception, cause);
       };
   }]);
 
