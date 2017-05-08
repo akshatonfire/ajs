@@ -1,16 +1,19 @@
 ## Single Page Application with Angular
 *Project 9 of Treehouse Full Stack JavaScript course*
 
-### Project objectives:
-In this project, you’ll create a Recipe Book single page application using AngularJS. To complete the project, you’ll use your knowledge of AngularJS to create controllers, update the provided HTML templates with ng attributes, and create a service that calls into the provided Node.js REST API.
+### To run this project:
+Run `git clone https://github.com/jprittie/Single-page-application-with-AngularJS.git` to clone the project. Run the `npm install` command to install the dependencies. Run `npm start` command to start the project with the node server. Navigate to localhost:5000.
 
-Your AngularJS SPA will be a “front end” or “client” application that complements the provided Node.js “back end” or “server” application. The code for the Node.js application is included as part of this project so you can run the back end server locally.
+### Project objectives:
+This project creates a Recipe Book single page application using AngularJS. Students must use their knowledge of AngularJS to create controllers, update the provided HTML templates with ng attributes, and create a service that calls into the provided Node.js REST API.
+
+The AngularJS SPA will be a “front end” or “client” application that complements the provided Node.js “back end” or “server” application. The code for the Node.js application is included as part of this project so you can run the back end server locally.
 
 The RecipeAPI.json.postman_collection file is a collection of Postman requests that you can use
 to test and explore the provided REST API.
 
-### Instructions:
-Your application will include two screens: a screen that displays a list of recipes and a detail screen that allows the user to add or edit recipes.
+### Specific objectives:
+The application must include two screens: a screen that displays a list of recipes and a detail screen that allows the user to add or edit recipes.
 
 #### 1. Recipes view
 * Displays a list of recipes
