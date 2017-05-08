@@ -12,7 +12,7 @@ The AngularJS SPA will be a “front end” or “client” application that com
 The RecipeAPI.json.postman_collection file is a collection of Postman requests that you can use
 to test and explore the provided REST API.
 
-### Specific objectives:
+### Specific requirements:
 The application must include two screens: a screen that displays a list of recipes and a detail screen that allows the user to add or edit recipes.
 
 #### 1. Recipes view
